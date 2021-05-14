@@ -31,15 +31,15 @@ namespace B21_EX2
         public static int IsValidSize(string sizeBoard)
         {
             int sizeOfBoard;
-            try
+
+            if(Int32.TryParse(sizeBoard, out sizeOfBoard))
             {
-                sizeOfBoard = Int32.Parse(sizeBoard);
                 if ((sizeOfBoard > 9) || (sizeOfBoard < 3))
                 {
                     sizeOfBoard = -1;
                 }
             }
-            catch (FormatException)
+            else
             {
                 sizeOfBoard = -1;
             }
@@ -51,7 +51,7 @@ namespace B21_EX2
         {
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                Console.Write((i + 1) + " ");
+                Console.Write("  " + (i + 1));
             }
             Console.WriteLine();
 

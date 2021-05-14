@@ -78,7 +78,7 @@ namespace B21_EX2
                             }
                             else
                             {
-                                Console.WriteLine("please enter row number (a number between 1 to {0})", m_BoardSize);
+                                Console.WriteLine("please enter col number (a number between 1 to {0})", m_BoardSize);
                                 m_RowNumberInput = Console.ReadLine();
                                 m_RowNumber = Cell.IsValidInputRowAndCol(m_RowNumberInput, m_BoardSize);
                             }

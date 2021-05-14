@@ -29,15 +29,14 @@ namespace B21_EX2
         {
             int NumberRow;
 
-            try
+            if (Int32.TryParse(RowInput, out NumberRow))
             {
-                NumberRow = Int32.Parse(RowInput);
                 if ((NumberRow > BoardSize) || (NumberRow < 1))
                 {
                     NumberRow = -1;
                 }
             }
-            catch (FormatException)
+            else
             {
                 NumberRow = -1;
             }
