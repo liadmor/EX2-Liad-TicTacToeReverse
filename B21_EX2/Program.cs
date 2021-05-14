@@ -8,5 +8,9 @@ namespace B21_EX2
 {
     class Program
     {
+        public static void Main()
+        {
+            TicTacToeRevers NewGame = new TicTacToeRevers();
+        }
     }
 }
