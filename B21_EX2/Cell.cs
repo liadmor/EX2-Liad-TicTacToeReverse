@@ -61,5 +61,21 @@ namespace B21_EX2
         {
             i_Cell.m_Mark = i_CellMark;
         }
+
+        public eCellMark GetCellMark()
+        {
+            return m_Mark;
+        }
+
+        public static int GetRow(Cell i_Cell)
+        {
+            return i_Cell.m_RowNumber;
+        }
+
+        public static int GetCol(Cell i_Cell)
+        {
+            return i_Cell.m_ColNumber;
+        }
+
     }
 }

@@ -49,30 +49,30 @@ namespace B21_EX2
 
         public static void PrintBoard(Board i_Board)
         {
-            string betweenRows = "= ";
-            cell[,] matrix;
-            stringbuilder board = new stringbuilder;
-            for (int i = 0; i < 4 * m_boardSize; i++)
+            for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                betweenRows += "=";
+                Console.Write((i + 1) + " ");
             }
-            for (int i = 1; i < m_boardSize; i++)
+            Console.WriteLine();
+
+            for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                board.append(" ");
-                board.append(i + " ");
-            }
-            board.append("\n");
-            for (int i = 0; i < m_boardSize; i++)
-            {
-                board.append((i + 1) + "|");
-                for (int j = 0; j < m_boardSize; j++)
+                Console.Write((i + 1) + "|");
+                for (int j = 0; j < i_Board.m_BoardSize; j++)
                 {
-                    board.append(matrix[i, j] + "|");
+                    Console.Write((char)((i_Board.board[i, j]).GetCellMark()) + "|") ;
                 }
-                board.append("\n");
-                board.append(betweenRows + "\n");
+
+                Console.WriteLine();
+                for (int k = 0; k < 3 * i_Board.m_BoardSize; k++)
+                {
+                    Console.Write("=");
+                }
+
+                Console.WriteLine();
             }
-            Console.WriteLine(board);
+
+            Console.WriteLine();
         }
 
         public static Cell GetCellBoard(Board i_board, int i_row, int i_col)
