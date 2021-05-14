@@ -30,5 +30,26 @@ namespace B21_EX2
 
             return isValid;
         }
+
+        public static string GetPlayerType(Player i_Player)
+        {
+            return i_Player.m_PlayerType;
+        }
+
+        public static Cell.eCellMark GetMark(Player i_Player)
+        {
+            return i_Player.m_PlayerMark;
+        }
+
+        public static void AddPoints(Player i_Player)
+        {
+            i_Player.m_NumberOfPoinf++;
+        }
+
+        public static int GetPoints(Player i_Player)
+        {
+            return i_Player.m_NumberOfPoinf;
+        }
+
     }
 }

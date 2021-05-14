@@ -46,5 +46,124 @@ namespace B21_EX2
 
             return sizeOfBoard;
         }
+
+        public static void PrintBoard(Board i_Board)
+        {
+            string betweenRows = "= ";
+            cell[,] matrix;
+            stringbuilder board = new stringbuilder;
+            for (int i = 0; i < 4 * m_boardSize; i++)
+            {
+                betweenRows += "=";
+            }
+            for (int i = 1; i < m_boardSize; i++)
+            {
+                board.append(" ");
+                board.append(i + " ");
+            }
+            board.append("\n");
+            for (int i = 0; i < m_boardSize; i++)
+            {
+                board.append((i + 1) + "|");
+                for (int j = 0; j < m_boardSize; j++)
+                {
+                    board.append(matrix[i, j] + "|");
+                }
+                board.append("\n");
+                board.append(betweenRows + "\n");
+            }
+            Console.WriteLine(board);
+        }
+
+        public static Cell GetCellBoard(Board i_board, int i_row, int i_col)
+        {
+            return i_board.board[i_row, i_col];
+
+        }
+
+        public static bool CheckRowSequence(Board i_Board, Cell i_Cell)
+        {
+            bool ThereIsSequence = true;
+            char CellMark = (char)i_Cell.GetCellMark();
+
+
+            for (int i = 0; i < i_Board.m_BoardSize; i++)
+            {
+                if ((char)Board.GetCellBoard(i_Board, Cell.GetRow(i_Cell), i).GetCellMark() != CellMark)//בודק שורה
+                {
+                    ThereIsSequence = false;
+                }
+            }
+            return ThereIsSequence;
+        }
+
+        public static bool CheckColSequence(Board i_Board, Cell i_Cell)
+        {
+            bool ThereIsSequence = true;
+            char CellMark = (char)i_Cell.GetCellMark();
+
+            for (int i = 0; i < i_Board.m_BoardSize; i++)
+            {
+                if ((char)Board.GetCellBoard(i_Board, i, Cell.GetCol(i_Cell)).GetCellMark() != CellMark)//בודק עמודה
+                {
+                    ThereIsSequence = false;
+                }
+            }
+            return ThereIsSequence;
+        }
+
+        public static bool CheckDiagonalSequence(Board i_Board, Cell i_Cell) //בודק אלכסון
+        {
+            bool ThereIsSequence = true;
+            char CellMark = (char)i_Cell.GetCellMark();
+
+            if ((Cell.GetCol(i_Cell) != Cell.GetRow(i_Cell)) && (Cell.GetCol(i_Cell) != (i_Board.m_BoardSize - Cell.GetRow(i_Cell) - 1))) //בדיקה האם התא נמצא על האלכסון ראשי
+            {
+                ThereIsSequence = false;
+            }
+            else
+            {
+                if (Cell.GetCol(i_Cell) == Cell.GetRow(i_Cell))//אם זה אלכסון ראשי
+                {
+                    for (int i = 0; i < i_Board.m_BoardSize; i++)
+                    {
+                        if ((char)Board.GetCellBoard(i_Board, i, i).GetCellMark() != CellMark)
+                        {
+                            ThereIsSequence = false;
+                        }
+                    }
+                    Console.WriteLine("in the main diagnal");
+                }
+                else
+                {
+                    for (int i = 0; i < i_Board.m_BoardSize; i++)
+                    {
+                        if ((char)Board.GetCellBoard(i_Board, i, i_Board.m_BoardSize - i - 1).GetCellMark() != CellMark)
+                        {
+                            ThereIsSequence = false;
+                        }
+                    }
+                }
+            }
+
+            return ThereIsSequence;
+        }
+
+        public static bool CheckIfTheBoardIsFull(Board i_Board)
+        {
+            bool IsFull = true;
+            for (int i = 0; i < i_Board.m_BoardSize; i++)
+            {
+                for (int j = 0; j < i_Board.m_BoardSize; j++)
+                {
+                    if (Cell.IsEmpty(Board.GetCellBoard(i_Board, i, j)))
+                    {
+                        IsFull = false;
+                    }
+                }
+            }
+
+            return IsFull;
+        }
     }
 }
