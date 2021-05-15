@@ -13,7 +13,7 @@ namespace B21_EX2
             Game();
         }
 
-        public static string AskAsixNumber(int m_boardSize, string m_whichAxis, Player i_NowPlaying)
+        public static string AskAxisNumber(int m_boardSize, string m_whichAxis, Player i_NowPlaying)
         {
             Console.WriteLine("Player {0} please enter {1} number (a number between 1 to {2})", (char)Player.GetMark(i_NowPlaying), m_whichAxis, m_boardSize);
             string m_RowNumberInput = Console.ReadLine();
@@ -28,14 +28,14 @@ namespace B21_EX2
             m_BoardSize = Board.GetBoardSize(i_Board);
             if (Player.GetPlayerType(i_NowPlaying) == "p")
             {
-                m_RowNumber = Board.TempFindAxis(m_BoardSize, "row", i_NowPlaying);
+                m_RowNumber = Board.FindNumberAxis(m_BoardSize, "row", i_NowPlaying);
                 if (m_RowNumber == -1)
                 {
                     m_ValidCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
                 }
                 else
                 {
-                    m_ColNumber = Board.TempFindAxis(m_BoardSize, "col", i_NowPlaying);
+                    m_ColNumber = Board.FindNumberAxis(m_BoardSize, "col", i_NowPlaying);
                     if (m_ColNumber == -1)
                     {
                         m_ValidCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
@@ -101,8 +101,6 @@ namespace B21_EX2
                 Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_waitingPlayer), Player.GetPoints(i_waitingPlayer));
                 Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_NowPlaying), Player.GetPoints(i_NowPlaying));
             }
-            
-
         }
 
         public static int AskForBoardSize()

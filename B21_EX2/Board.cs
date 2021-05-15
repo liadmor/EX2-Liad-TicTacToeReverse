@@ -51,20 +51,21 @@ namespace B21_EX2
         {
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                Console.Write("  " + (i + 1));
+                Console.Write("  " + (i + 1) + " ");
             }
-            Console.WriteLine();
 
+            Console.WriteLine();
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                Console.Write((i + 1) + "|");
+                Console.Write((i + 1) + "| ");
                 for (int j = 0; j < i_Board.m_BoardSize; j++)
                 {
-                    Console.Write((char)((i_Board.board[i, j]).GetCellMark()) + "|") ;
+                    Console.Write((char)((i_Board.board[i, j]).GetCellMark()) + " | ") ;
                 }
 
                 Console.WriteLine();
-                for (int k = 0; k < 3 * i_Board.m_BoardSize; k++)
+                Console.Write(" =");
+                for (int k = 1; k < 4 * i_Board.m_BoardSize ; k++)
                 {
                     Console.Write("=");
                 }
@@ -170,12 +171,12 @@ namespace B21_EX2
             return IsFull;
         }
 
-        public static int TempFindAxis( int i_boardsize, string m_whichAxis, Player i_NowPlaying)
+        public static int FindNumberAxis( int i_boardsize, string m_whichAxis, Player i_NowPlaying)
         {
             bool stilcheck = true;
             int ans = 0;
             
-            string m_tempinput = TicTacToeRevers.AskAsixNumber(i_boardsize, m_whichAxis, i_NowPlaying);
+            string m_tempinput = TicTacToeRevers.AskAxisNumber(i_boardsize, m_whichAxis, i_NowPlaying);
             int m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
             while (stilcheck)
             {
@@ -189,7 +190,7 @@ namespace B21_EX2
                     }
                     else
                     {
-                        m_tempinput = TicTacToeRevers.AskAsixNumber(i_boardsize, m_whichAxis, i_NowPlaying);
+                        m_tempinput = TicTacToeRevers.AskAxisNumber(i_boardsize, m_whichAxis, i_NowPlaying);
                         m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
                     }
                 }
