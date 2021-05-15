@@ -78,7 +78,11 @@ namespace B21_EX2
         public static Cell GetCellBoard(Board i_board, int i_row, int i_col)
         {
             return i_board.board[i_row, i_col];
+        }
 
+        public static bool ThereIsWinner (Board i_Board, Cell i_Cell)
+        {
+            return CheckColSequence(i_Board, i_Cell) || CheckDiagonalSequence(i_Board, i_Cell) || CheckRowSequence(i_Board, i_Cell);
         }
 
         public static bool CheckRowSequence(Board i_Board, Cell i_Cell)
@@ -94,6 +98,7 @@ namespace B21_EX2
                     ThereIsSequence = false;
                 }
             }
+
             return ThereIsSequence;
         }
 
@@ -164,6 +169,44 @@ namespace B21_EX2
             }
 
             return IsFull;
+        }
+
+        public static int TempFindAxis( int i_boardsize, string m_whichAxis, Player i_NowPlaying)
+        {
+            bool stilcheck = true;
+            int ans = 0;
+            
+            string m_tempinput = TicTacToeRevers.AskAsixNumber(i_boardsize, m_whichAxis, i_NowPlaying);
+            int m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
+            while (stilcheck)
+            {
+                if(m_inputint == -1)
+                {
+                    if (m_tempinput == "Q")
+                    {
+                        stilcheck = false;
+                        ans = -1;
+                        break;
+                    }
+                    else
+                    {
+                        m_tempinput = TicTacToeRevers.AskAsixNumber(i_boardsize, m_whichAxis, i_NowPlaying);
+                        m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
+                    }
+                }
+                else
+                {
+                    stilcheck = false;
+                    ans = m_inputint;
+                    break;
+                }
+            }
+            return ans;
+        }
+
+        public static int GetBoardSize(Board i_Board)
+        {
+            return i_Board.m_BoardSize;
         }
     }
 }

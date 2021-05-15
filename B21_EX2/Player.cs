@@ -19,6 +19,14 @@ namespace B21_EX2
             m_NumberOfPoinf = 0;
         }
 
+        public static void ChengePlayer(ref Player i_waitingPlayer, ref Player i_NowPlaying)
+        {
+
+            Player m_TempPlayer = i_waitingPlayer;
+            i_waitingPlayer = i_NowPlaying;
+            i_NowPlaying = m_TempPlayer;
+        }
+
         public static bool IsValidPlayer(string i_player)
         {
             bool isValid = true;

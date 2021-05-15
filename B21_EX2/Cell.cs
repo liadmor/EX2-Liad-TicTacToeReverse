@@ -25,7 +25,22 @@ namespace B21_EX2
             Mark_O = 'O',
         }
 
-        public static int IsValidInputRowAndCol(string RowInput, int BoardSize)
+        public static Cell FindValidCell(Player i_NowPlaying, Board i_Board)
+        {
+            Cell m_OptionalCell =TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+            while (!IsEmpty(m_OptionalCell))
+            {
+                if (Player.GetPlayerType(i_NowPlaying) == "p")
+                {
+                    Console.WriteLine("The cell is not avilable, please enter another cell");
+                }
+                m_OptionalCell = TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+            }
+
+            return m_OptionalCell;
+        }
+
+        public static int IsValidInputAxis(string RowInput, int BoardSize)
         {
             int NumberRow;
 
