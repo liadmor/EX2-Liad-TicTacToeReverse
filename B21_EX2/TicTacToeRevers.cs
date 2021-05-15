@@ -105,49 +105,59 @@ namespace B21_EX2
 
         }
 
+        public static int AskForBoardSize()
+        {
+            int BoardSize;
+            string m_BoardSizeInput;
+
+            Console.WriteLine("please enter the board's size (number between 3 to 9)");
+            m_BoardSizeInput = Console.ReadLine();
+            BoardSize = Board.IsValidSize(m_BoardSizeInput);
+            while (BoardSize == -1)
+            {
+                Console.WriteLine("please enter the board's size (number between 3 to 9)");
+                m_BoardSizeInput = Console.ReadLine();
+                BoardSize = Board.IsValidSize(m_BoardSizeInput);
+            }
+
+            return BoardSize;
+        }
+
+        public static string AskWhoToPlayWith()
+        {
+            string PlayWith;
+            bool CheckInput;
+
+            Console.WriteLine("do you want to play vs. another player? if yes - press p else, press c to play vs. computer");
+            PlayWith = Console.ReadLine();
+            CheckInput = Player.IsValidPlayer(PlayWith);
+            while (!CheckInput)
+            {
+                Console.WriteLine("please enter vs. who you want to play. if with another player - press p. else, press c ");
+                PlayWith = Console.ReadLine();
+                CheckInput = Player.IsValidPlayer(PlayWith);
+            }
+
+            return PlayWith;
+        }
         public static void Game()
         {
-            bool m_Game = true;
-            bool m_Round = true, m_PlayWithCheck;
-            string m_BoardSizeInput, m_playWith;
+            bool m_Game = true, m_Round = true;
+            string m_playWith;
             int m_BoardSize;
             Player m_PlayerX, m_PlayerO, m_NowPlaying, m_waitingPlayer;
             Board m_Board;
 
-
-
-            Console.WriteLine("please enter the board's size (number between 3 to 9)");
-            m_BoardSizeInput = Console.ReadLine();
-            m_BoardSize = Board.IsValidSize(m_BoardSizeInput);
-            while (m_BoardSize == -1)
-            {
-                Console.WriteLine("please enter the board's size (number between 3 to 9)");
-                m_BoardSizeInput = Console.ReadLine();
-                m_BoardSize = Board.IsValidSize(m_BoardSizeInput);
-            }
-
-            Console.WriteLine("do you want to play vs. another player? if yes - press p else, press c to play vs. computer");
-            m_playWith = Console.ReadLine();
-            m_PlayWithCheck = Player.IsValidPlayer(m_playWith);
-            while (!m_PlayWithCheck)
-            {
-                Console.WriteLine("please enter vs. who you want to play. if with another player - press p. else, press c ");
-                m_playWith = Console.ReadLine();
-                m_PlayWithCheck = Player.IsValidPlayer(m_playWith);
-            }
-
+            m_BoardSize = AskForBoardSize();
+            m_playWith = AskWhoToPlayWith();
             m_PlayerX = new Player("p", Cell.eCellMark.Mark_X);
             m_PlayerO = new Player(m_playWith, Cell.eCellMark.Mark_O);
             m_Board = new Board(m_BoardSize);
-
             Board.PrintBoard(m_Board);
             m_NowPlaying = m_PlayerX;
             m_waitingPlayer = m_PlayerO;
-
             while (m_Game)
             {
-                string m_AnotherRound;
-
                 while (m_Round)
                 {
                     Cell m_ValidCell;

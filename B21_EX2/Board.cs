@@ -137,7 +137,6 @@ namespace B21_EX2
                             ThereIsSequence = false;
                         }
                     }
-                    Console.WriteLine("in the main diagnal");
                 }
                 else
                 {

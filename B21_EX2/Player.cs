@@ -8,8 +8,8 @@ namespace B21_EX2
 {
     class Player
     {
-        string m_PlayerType; //c\p
-        Cell.eCellMark m_PlayerMark; // X\O
+        string m_PlayerType;
+        Cell.eCellMark m_PlayerMark;
         int m_NumberOfPoinf;
 
         public Player(string i_PlayerType, Cell.eCellMark i_PlayerMark)
