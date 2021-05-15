@@ -9,30 +9,32 @@ namespace B21_EX2
     class Board
     {
         int m_BoardSize;
-        Cell[,] board;
+        Cell[,] m_Board;
+
         public Board(int i_BoardSize)
         {
             m_BoardSize = i_BoardSize;
-            InitBoard();
+            initBoard();
         }
 
-        public void InitBoard()
+        private void initBoard()
         {
-            board = new Cell[m_BoardSize, m_BoardSize];
+            m_Board = new Cell[m_BoardSize, m_BoardSize];
+
             for (int i = 0; i < m_BoardSize; i++)
             {
                 for (int j = 0; j < m_BoardSize; j++)
                 {
-                    board[i, j] = new Cell(i, j, Cell.eCellMark.Mark_Empty);
+                    m_Board[i, j] = new Cell(i, j, Cell.eCellMark.Mark_Empty);
                 }
             }
         }
 
-        public static int IsValidSize(string sizeBoard)
+        public static int IsValidSize(string i_SizeBoard)
         {
             int sizeOfBoard;
 
-            if(Int32.TryParse(sizeBoard, out sizeOfBoard))
+            if (Int32.TryParse(i_SizeBoard, out sizeOfBoard))
             {
                 if ((sizeOfBoard > 9) || (sizeOfBoard < 3))
                 {
@@ -49,93 +51,98 @@ namespace B21_EX2
 
         public static void PrintBoard(Board i_Board)
         {
+            StringBuilder printBoard = new StringBuilder();
+
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                Console.Write("  " + (i + 1) + " ");
+                printBoard.Append("  " + (i + 1) + " ");
             }
 
-            Console.WriteLine();
+            printBoard.Append(Environment.NewLine);
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                Console.Write((i + 1) + "| ");
+                printBoard.Append((i + 1) + "| ");
                 for (int j = 0; j < i_Board.m_BoardSize; j++)
                 {
-                    Console.Write((char)((i_Board.board[i, j]).GetCellMark()) + " | ") ;
+                    printBoard.Append((char)((i_Board.m_Board[i, j]).GetCellMark()) + " | ");
                 }
 
-                Console.WriteLine();
-                Console.Write(" =");
-                for (int k = 1; k < 4 * i_Board.m_BoardSize ; k++)
+                printBoard.Append(Environment.NewLine);
+                printBoard.Append(" =");
+                for (int k = 1; k < 4 * i_Board.m_BoardSize; k++)
                 {
-                    Console.Write("=");
+                    printBoard.Append("=");
                 }
 
-                Console.WriteLine();
+                printBoard.Append(Environment.NewLine);
             }
 
-            Console.WriteLine();
+            Console.WriteLine(printBoard);
         }
 
         public static Cell GetCellBoard(Board i_board, int i_row, int i_col)
         {
-            return i_board.board[i_row, i_col];
+            return i_board.m_Board[i_row, i_col];
         }
 
-        public static bool ThereIsWinner (Board i_Board, Cell i_Cell)
+        public static bool ThereIsWinner(Board i_Board, Cell i_Cell)
         {
-            return CheckColSequence(i_Board, i_Cell) || CheckDiagonalSequence(i_Board, i_Cell) || CheckRowSequence(i_Board, i_Cell);
+            return checkColSequence(i_Board, i_Cell) || checkDiagonalSequence(i_Board, i_Cell) || checkRowSequence(i_Board, i_Cell);
         }
 
-        public static bool CheckRowSequence(Board i_Board, Cell i_Cell)
+        private static bool checkRowSequence(Board i_Board, Cell i_Cell)
         {
-            bool ThereIsSequence = true;
-            char CellMark = (char)i_Cell.GetCellMark();
+            bool thereIsSequence = true;
+            char cellMark;
 
-
+            cellMark = (char)i_Cell.GetCellMark();
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                if ((char)Board.GetCellBoard(i_Board, Cell.GetRow(i_Cell), i).GetCellMark() != CellMark)//בודק שורה
+                if ((char)Board.GetCellBoard(i_Board, Cell.GetRow(i_Cell), i).GetCellMark() != cellMark)
                 {
-                    ThereIsSequence = false;
+                    thereIsSequence = false;
                 }
             }
 
-            return ThereIsSequence;
+            return thereIsSequence;
         }
 
-        public static bool CheckColSequence(Board i_Board, Cell i_Cell)
+        private static bool checkColSequence(Board i_Board, Cell i_Cell)
         {
-            bool ThereIsSequence = true;
-            char CellMark = (char)i_Cell.GetCellMark();
+            bool thereIsSequence = true;
+            char cellMark;
 
+            cellMark = (char)i_Cell.GetCellMark();
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
-                if ((char)Board.GetCellBoard(i_Board, i, Cell.GetCol(i_Cell)).GetCellMark() != CellMark)//בודק עמודה
+                if ((char)Board.GetCellBoard(i_Board, i, Cell.GetCol(i_Cell)).GetCellMark() != cellMark)
                 {
-                    ThereIsSequence = false;
+                    thereIsSequence = false;
                 }
             }
-            return ThereIsSequence;
+
+            return thereIsSequence;
         }
 
-        public static bool CheckDiagonalSequence(Board i_Board, Cell i_Cell) //בודק אלכסון
+        private static bool checkDiagonalSequence(Board i_Board, Cell i_Cell)
         {
-            bool ThereIsSequence = true;
-            char CellMark = (char)i_Cell.GetCellMark();
+            bool thereIsSequence = true;
+            char cellMark;
 
-            if ((Cell.GetCol(i_Cell) != Cell.GetRow(i_Cell)) && (Cell.GetCol(i_Cell) != (i_Board.m_BoardSize - Cell.GetRow(i_Cell) - 1))) //בדיקה האם התא נמצא על האלכסון ראשי
+            cellMark = (char)i_Cell.GetCellMark();
+            if ((Cell.GetCol(i_Cell) != Cell.GetRow(i_Cell)) && (Cell.GetCol(i_Cell) != (i_Board.m_BoardSize - Cell.GetRow(i_Cell) - 1)))
             {
-                ThereIsSequence = false;
+                thereIsSequence = false;
             }
             else
             {
-                if (Cell.GetCol(i_Cell) == Cell.GetRow(i_Cell))//אם זה אלכסון ראשי
+                if (Cell.GetCol(i_Cell) == Cell.GetRow(i_Cell))
                 {
                     for (int i = 0; i < i_Board.m_BoardSize; i++)
                     {
-                        if ((char)Board.GetCellBoard(i_Board, i, i).GetCellMark() != CellMark)
+                        if ((char)Board.GetCellBoard(i_Board, i, i).GetCellMark() != cellMark)
                         {
-                            ThereIsSequence = false;
+                            thereIsSequence = false;
                         }
                     }
                 }
@@ -143,64 +150,68 @@ namespace B21_EX2
                 {
                     for (int i = 0; i < i_Board.m_BoardSize; i++)
                     {
-                        if ((char)Board.GetCellBoard(i_Board, i, i_Board.m_BoardSize - i - 1).GetCellMark() != CellMark)
+                        if ((char)Board.GetCellBoard(i_Board, i, i_Board.m_BoardSize - i - 1).GetCellMark() != cellMark)
                         {
-                            ThereIsSequence = false;
+                            thereIsSequence = false;
                         }
                     }
                 }
             }
 
-            return ThereIsSequence;
+            return thereIsSequence;
         }
 
         public static bool CheckIfTheBoardIsFull(Board i_Board)
         {
-            bool IsFull = true;
+            bool isFull = true;
+
             for (int i = 0; i < i_Board.m_BoardSize; i++)
             {
                 for (int j = 0; j < i_Board.m_BoardSize; j++)
                 {
                     if (Cell.IsEmpty(Board.GetCellBoard(i_Board, i, j)))
                     {
-                        IsFull = false;
+                        isFull = false;
                     }
                 }
             }
 
-            return IsFull;
+            return isFull;
         }
 
-        public static int FindNumberAxis( int i_boardsize, string m_whichAxis, Player i_NowPlaying)
+        public static int FindNumberAxis(int i_boardsize, string i_whichAxis, Player i_NowPlaying)
         {
-            bool stilcheck = true;
+            bool stillCheck = true;
             int ans = 0;
-            
-            string m_tempinput = TicTacToeRevers.AskAxisNumber(i_boardsize, m_whichAxis, i_NowPlaying);
-            int m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
-            while (stilcheck)
+            string axisNumberStr;
+            int axisNumberInt;
+
+            axisNumberStr = TicTacToeRevers.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
+            axisNumberInt = Cell.ValidInputAxis(axisNumberStr, i_boardsize);
+            while (stillCheck)
             {
-                if(m_inputint == -1)
+                if (axisNumberInt == -1)
                 {
-                    if (m_tempinput == "Q")
+                    if (axisNumberStr == "Q")
                     {
-                        stilcheck = false;
+                        stillCheck = false;
                         ans = -1;
                         break;
                     }
                     else
                     {
-                        m_tempinput = TicTacToeRevers.AskAxisNumber(i_boardsize, m_whichAxis, i_NowPlaying);
-                        m_inputint = Cell.IsValidInputAxis(m_tempinput, i_boardsize);
+                        axisNumberStr = TicTacToeRevers.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
+                        axisNumberInt = Cell.ValidInputAxis(axisNumberStr, i_boardsize);
                     }
                 }
                 else
                 {
-                    stilcheck = false;
-                    ans = m_inputint;
+                    stillCheck = false;
+                    ans = axisNumberInt;
                     break;
                 }
             }
+
             return ans;
         }
 

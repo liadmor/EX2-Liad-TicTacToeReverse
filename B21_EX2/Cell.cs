@@ -18,6 +18,7 @@ namespace B21_EX2
             m_ColNumber = i_ColNumber;
             m_Mark = i_Mark;
         }
+
         public enum eCellMark
         {
             Mark_Empty = ' ',
@@ -27,48 +28,51 @@ namespace B21_EX2
 
         public static Cell FindValidCell(Player i_NowPlaying, Board i_Board)
         {
-            Cell m_OptionalCell =TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
-            while (!IsEmpty(m_OptionalCell))
+            Cell optionalCell;
+
+            optionalCell =TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+            while (!IsEmpty(optionalCell))
             {
                 if (Player.GetPlayerType(i_NowPlaying) == "p")
                 {
                     Console.WriteLine("The cell is not avilable, please enter another cell");
                 }
-                m_OptionalCell = TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+
+                optionalCell = TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
             }
 
-            return m_OptionalCell;
+            return optionalCell;
         }
 
-        public static int IsValidInputAxis(string RowInput, int BoardSize)
+        public static int ValidInputAxis(string i_RowInput, int i_BoardSize)
         {
-            int NumberRow;
+            int numberRow;
 
-            if (Int32.TryParse(RowInput, out NumberRow))
+            if (Int32.TryParse(i_RowInput, out numberRow))
             {
-                if ((NumberRow > BoardSize) || (NumberRow < 1))
+                if ((numberRow > i_BoardSize) || (numberRow < 1))
                 {
-                    NumberRow = -1;
+                    numberRow = -1;
                 }
             }
             else
             {
-                NumberRow = -1;
+                numberRow = -1;
             }
 
-            return NumberRow;
+            return numberRow;
         }
 
         public static bool IsEmpty(Cell i_Cell)
         {
-            bool CellIsEmpty = true;
+            bool cellIsEmpty = true;
 
             if ((char)i_Cell.m_Mark != (char)eCellMark.Mark_Empty)
             {
-                CellIsEmpty = false;
+                cellIsEmpty = false;
             }
 
-            return CellIsEmpty;
+            return cellIsEmpty;
         }
 
         public static void SetCell(Cell i_Cell, eCellMark i_CellMark)
@@ -90,6 +94,5 @@ namespace B21_EX2
         {
             return i_Cell.m_ColNumber;
         }
-
     }
 }

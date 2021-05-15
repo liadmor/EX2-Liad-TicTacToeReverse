@@ -10,197 +10,211 @@ namespace B21_EX2
     {
         public TicTacToeRevers()
         {
-            Game();
+            game();
         }
 
-        public static string AskAxisNumber(int m_boardSize, string m_whichAxis, Player i_NowPlaying)
+        public static string AskAxisNumber(int i_BoardSize, string i_WhichAxis, Player i_NowPlaying)
         {
-            Console.WriteLine("Player {0} please enter {1} number (a number between 1 to {2})", (char)Player.GetMark(i_NowPlaying), m_whichAxis, m_boardSize);
-            string m_RowNumberInput = Console.ReadLine();
-            return m_RowNumberInput;
+            string rowNumberInput;
+
+            Console.WriteLine("Player {0} please enter {1} number (a number between 1 to {2})", (char)Player.GetMark(i_NowPlaying), i_WhichAxis, i_BoardSize);
+            rowNumberInput = Console.ReadLine();
+
+            return rowNumberInput;
         }
 
         public static Cell FindCell(Player i_NowPlaying, Board i_Board)
         {
-            int m_RowNumber, m_ColNumber, m_BoardSize;
-            Cell m_ValidCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
+            int rowNumber, colNumber, boardSize;
+            Cell validCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
 
-            m_BoardSize = Board.GetBoardSize(i_Board);
+            boardSize = Board.GetBoardSize(i_Board);
             if (Player.GetPlayerType(i_NowPlaying) == "p")
             {
-                m_RowNumber = Board.FindNumberAxis(m_BoardSize, "row", i_NowPlaying);
-                if (m_RowNumber == -1)
+                rowNumber = Board.FindNumberAxis(boardSize, "row", i_NowPlaying);
+                if (rowNumber == -1)
                 {
-                    m_ValidCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
+                    validCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
                 }
                 else
                 {
-                    m_ColNumber = Board.FindNumberAxis(m_BoardSize, "col", i_NowPlaying);
-                    if (m_ColNumber == -1)
+                    colNumber = Board.FindNumberAxis(boardSize, "col", i_NowPlaying);
+                    if (colNumber == -1)
                     {
-                        m_ValidCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
+                        validCell = new Cell(-1, -1, Cell.eCellMark.Mark_Empty);
                     }
                     else
                     {
-                        m_ValidCell = Board.GetCellBoard(i_Board, m_RowNumber - 1, m_ColNumber - 1);
+                        validCell = Board.GetCellBoard(i_Board, rowNumber - 1, colNumber - 1);
                     }
                 }
             }
             else
             {
                 Random RndNumber = new Random();
-                m_RowNumber = RndNumber.Next(1, m_BoardSize + 1);
-                m_ColNumber = RndNumber.Next(1, m_BoardSize + 1);
-                m_ValidCell = Board.GetCellBoard(i_Board, m_RowNumber - 1, m_ColNumber - 1);
+                rowNumber = RndNumber.Next(1, boardSize + 1);
+                colNumber = RndNumber.Next(1, boardSize + 1);
+                validCell = Board.GetCellBoard(i_Board, rowNumber - 1, colNumber - 1);
             }
 
-            return m_ValidCell;
+            return validCell;
         }
 
-        public static bool AskForAnotherRound(ref Board i_Board)
+        private static bool askForAnotherRound(ref Board io_Board)
         {
-            bool AnotherRound = false;
+            bool anotherRound = false;
+            string wantAnotherRound;
 
             Console.WriteLine("If you want another round please enter Y. else enter N");
-            string m_AnotherRound = Console.ReadLine();
-            if (m_AnotherRound == "Y")
+            wantAnotherRound = Console.ReadLine();
+            if (wantAnotherRound == "Y")
             {
-                i_Board = new Board(Board.GetBoardSize(i_Board));
-                Board.PrintBoard(i_Board);
-                AnotherRound = true;
+                io_Board = new Board(Board.GetBoardSize(io_Board));
+                Board.PrintBoard(io_Board);
+                anotherRound = true;
             }
             else
             {
-                if (m_AnotherRound == "N")
+                if (wantAnotherRound == "N")
                 {
                     Console.WriteLine("GAME OVER! hope you like the app");
-                    AnotherRound = false;
+                    anotherRound = false;
                 }
                 else
                 {
                     Console.WriteLine("please enter Y for paly another round and N to Quit the Game");
-                    m_AnotherRound = Console.ReadLine();
+                    wantAnotherRound = Console.ReadLine();
                 }
             }
 
-            return AnotherRound;
+            return anotherRound;
         }
 
-        public static void PrintStatusRound(string i_StatusRound, Player i_NowPlaying, Player i_waitingPlayer)
+        private static void printStatusRound(string i_StatusRound, Player i_NowPlaying, Player i_waitingPlayer)
         {
+            StringBuilder statusRound = new StringBuilder();
+
             if (i_StatusRound == "win")
             {
-                Console.WriteLine("The winner is {0} ", (char)Player.GetMark(i_waitingPlayer));
+                statusRound.AppendFormat("The winner is {0} ", (char)Player.GetMark(i_waitingPlayer));
+                statusRound.Append(Environment.NewLine);
                 Player.AddPoints(i_waitingPlayer);
-                Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_waitingPlayer), Player.GetPoints(i_waitingPlayer));
-                Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_NowPlaying), Player.GetPoints(i_NowPlaying));
+                statusRound.AppendFormat("Player {0} have {1} points ", (char)Player.GetMark(i_waitingPlayer), Player.GetPoints(i_waitingPlayer));
+                statusRound.Append(Environment.NewLine);
+                statusRound.AppendFormat("Player {0} have {1} points ", (char)Player.GetMark(i_NowPlaying), Player.GetPoints(i_NowPlaying));
+                
             }
             else
             {
-                Console.WriteLine("There is a Tie");
-                Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_waitingPlayer), Player.GetPoints(i_waitingPlayer));
-                Console.WriteLine("Player {0} have {1} points ", (char)Player.GetMark(i_NowPlaying), Player.GetPoints(i_NowPlaying));
+                statusRound.Append("There is a Tie");
+                statusRound.Append(Environment.NewLine);
+                statusRound.AppendFormat("Player {0} have {1} points ", (char)Player.GetMark(i_waitingPlayer), Player.GetPoints(i_waitingPlayer));
+                statusRound.Append(Environment.NewLine);
+                statusRound.AppendFormat("Player {0} have {1} points ", (char)Player.GetMark(i_NowPlaying), Player.GetPoints(i_NowPlaying));
             }
+
+            Console.WriteLine(statusRound);
         }
 
-        public static int AskForBoardSize()
+        private static int askForBoardSize()
         {
-            int BoardSize;
-            string m_BoardSizeInput;
+            int boardSize;
+            string boardSizeInput;
 
             Console.WriteLine("please enter the board's size (number between 3 to 9)");
-            m_BoardSizeInput = Console.ReadLine();
-            BoardSize = Board.IsValidSize(m_BoardSizeInput);
-            while (BoardSize == -1)
+            boardSizeInput = Console.ReadLine();
+            boardSize = Board.IsValidSize(boardSizeInput);
+            while (boardSize == -1)
             {
                 Console.WriteLine("please enter the board's size (number between 3 to 9)");
-                m_BoardSizeInput = Console.ReadLine();
-                BoardSize = Board.IsValidSize(m_BoardSizeInput);
+                boardSizeInput = Console.ReadLine();
+                boardSize = Board.IsValidSize(boardSizeInput);
             }
 
-            return BoardSize;
+            return boardSize;
         }
 
-        public static string AskWhoToPlayWith()
+        private static string askWhoToPlayWith()
         {
-            string PlayWith;
-            bool CheckInput;
+            string playWith;
+            bool checkInput;
 
             Console.WriteLine("do you want to play vs. another player? if yes - press p else, press c to play vs. computer");
-            PlayWith = Console.ReadLine();
-            CheckInput = Player.IsValidPlayer(PlayWith);
-            while (!CheckInput)
+            playWith = Console.ReadLine();
+            checkInput = Player.IsValidPlayer(playWith);
+            while (!checkInput)
             {
                 Console.WriteLine("please enter vs. who you want to play. if with another player - press p. else, press c ");
-                PlayWith = Console.ReadLine();
-                CheckInput = Player.IsValidPlayer(PlayWith);
+                playWith = Console.ReadLine();
+                checkInput = Player.IsValidPlayer(playWith);
             }
 
-            return PlayWith;
+            return playWith;
         }
-        public static void Game()
+
+        private static void game()
         {
-            bool m_Game = true, m_Round = true;
-            string m_playWith;
-            int m_BoardSize;
-            Player m_PlayerX, m_PlayerO, m_NowPlaying, m_waitingPlayer;
-            Board m_Board;
+            bool game = true, round = true;
+            string playWith;
+            int boardSize;
+            Player playerX, playerO, nowPlaying, waitingPlayer;
+            Board board;
 
-            m_BoardSize = AskForBoardSize();
-            m_playWith = AskWhoToPlayWith();
-            m_PlayerX = new Player("p", Cell.eCellMark.Mark_X);
-            m_PlayerO = new Player(m_playWith, Cell.eCellMark.Mark_O);
-            m_Board = new Board(m_BoardSize);
-            Board.PrintBoard(m_Board);
-            m_NowPlaying = m_PlayerX;
-            m_waitingPlayer = m_PlayerO;
-            while (m_Game)
+            boardSize = askForBoardSize();
+            playWith = askWhoToPlayWith();
+            playerX = new Player("p", Cell.eCellMark.Mark_X);
+            playerO = new Player(playWith, Cell.eCellMark.Mark_O);
+            board = new Board(boardSize);
+            Board.PrintBoard(board);
+            nowPlaying = playerX;
+            waitingPlayer = playerO;
+            while (game)
             {
-                while (m_Round)
+                while (round)
                 {
-                    Cell m_ValidCell;
-                    bool m_ThereIsWinner, m_CheckIfBoardFull;
+                    Cell validCell;
+                    bool thereIsWinner, checkIfBoardFull;
 
-                    m_ValidCell = Cell.FindValidCell(m_NowPlaying, m_Board);
-                    if ((Cell.GetCol(m_ValidCell) == -1) && (Cell.GetRow(m_ValidCell) == -1))
+                    validCell = Cell.FindValidCell(nowPlaying, board);
+                    if ((Cell.GetCol(validCell) == -1) && (Cell.GetRow(validCell) == -1))
                     {
-                        m_Round = false;
+                        round = false;
                         break;
                     }
 
-                    Cell.SetCell(m_ValidCell, Player.GetMark(m_NowPlaying));
+                    Cell.SetCell(validCell, Player.GetMark(nowPlaying));
                     Console.Clear();
-                    Board.PrintBoard(m_Board);
-                    m_ThereIsWinner = Board.ThereIsWinner(m_Board, m_ValidCell); 
-                    if (m_ThereIsWinner)
+                    Board.PrintBoard(board);
+                    thereIsWinner = Board.ThereIsWinner(board, validCell); 
+                    if (thereIsWinner)
                     {
-                        PrintStatusRound("win", m_NowPlaying, m_waitingPlayer);
-                        m_Round = false;
+                        printStatusRound("win", nowPlaying, waitingPlayer);
+                        round = false;
                         break;
                     }
                     else
                     {
-                        m_CheckIfBoardFull = Board.CheckIfTheBoardIsFull(m_Board);
-                        if (m_CheckIfBoardFull)
+                        checkIfBoardFull = Board.CheckIfTheBoardIsFull(board);
+                        if (checkIfBoardFull)
                         {
-                            PrintStatusRound("tie", m_NowPlaying, m_waitingPlayer);
-                            m_Round = false;
+                            printStatusRound("tie", nowPlaying, waitingPlayer);
+                            round = false;
                             break;
                         }
                         else
                         {
-                            Player.ChengePlayer(ref m_waitingPlayer, ref m_NowPlaying);
+                            Player.ChengePlayers(ref waitingPlayer, ref nowPlaying);
                         }
                     }
                 }
 
-                if (AskForAnotherRound(ref m_Board))
+                if (askForAnotherRound(ref board))
                 {
-                    m_Round = true;
+                    round = true;
                 }
                 else
                 {
-                    m_Game = false;
+                    game = false;
                 }
             }
         }
