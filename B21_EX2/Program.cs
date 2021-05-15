@@ -10,7 +10,7 @@ namespace B21_EX2
     {
         public static void Main()
         {
-            new TicTacToeRevers();
+            new TicTacToeReverse();
         }
     }
 }

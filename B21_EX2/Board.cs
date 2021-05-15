@@ -186,7 +186,7 @@ namespace B21_EX2
             string axisNumberStr;
             int axisNumberInt;
 
-            axisNumberStr = TicTacToeRevers.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
+            axisNumberStr = TicTacToeReverse.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
             axisNumberInt = Cell.ValidInputAxis(axisNumberStr, i_boardsize);
             while (stillCheck)
             {
@@ -200,7 +200,7 @@ namespace B21_EX2
                     }
                     else
                     {
-                        axisNumberStr = TicTacToeRevers.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
+                        axisNumberStr = TicTacToeReverse.AskAxisNumber(i_boardsize, i_whichAxis, i_NowPlaying);
                         axisNumberInt = Cell.ValidInputAxis(axisNumberStr, i_boardsize);
                     }
                 }

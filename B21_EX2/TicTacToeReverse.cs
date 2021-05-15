@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace B21_EX2
 {
-    class TicTacToeRevers
+    class TicTacToeReverse
     {
-        public TicTacToeRevers()
+        public TicTacToeReverse()
         {
             game();
         }

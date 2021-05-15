@@ -30,7 +30,7 @@ namespace B21_EX2
         {
             Cell optionalCell;
 
-            optionalCell =TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+            optionalCell =TicTacToeReverse.FindCell(i_NowPlaying, i_Board);
             while (!IsEmpty(optionalCell))
             {
                 if (Player.GetPlayerType(i_NowPlaying) == "p")
@@ -38,7 +38,7 @@ namespace B21_EX2
                     Console.WriteLine("The cell is not avilable, please enter another cell");
                 }
 
-                optionalCell = TicTacToeRevers.FindCell(i_NowPlaying, i_Board);
+                optionalCell = TicTacToeReverse.FindCell(i_NowPlaying, i_Board);
             }
 
             return optionalCell;
